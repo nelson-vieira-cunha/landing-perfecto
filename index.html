@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Perfectto – Líder no Segmento</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -23,6 +26,13 @@
   h1,h2,h3,h4,h5 { font-family: 'Inter', sans-serif; }
 
   /* ── NAV ── */
+
+  .bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
   nav {
     background: var(--orange);
     display: flex; align-items: center; justify-content: space-between;
@@ -82,8 +92,8 @@
 
   /* ── SECTION TITLES ── */
   .section-title {
-    font-family: 'Inter', sans-serif;
-    font-size: 20px; font-weight: 800;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 45px; font-weight: 900;
     text-transform: uppercase; color: var(--black);
     margin-bottom: 28px; letter-spacing: .3px;
   }
@@ -201,10 +211,10 @@
   .stat-item:last-child { border-right: none; }
   .stat-num {
     font-family: 'Inter', sans-serif;
-    font-size: 32px; font-weight: 900; color: var(--orange); display: block;
+    font-size: 45px; font-weight: 900; color: var(--orange); display: block;
   }
   .stat-label {
-    font-size: 12px; color: #fff(255,255,255,.6);
+    font-size: 18px; color: #fff(255,255,255,.6);
     margin-top: 4px; display: block;
   }
 
@@ -239,11 +249,11 @@
     padding: 56px 48px; text-align: center;
   }
   .trabalhe h2 {
-    font-size: 22px; font-weight: 800;
+    font-size: 42px; font-weight: 800;
     text-transform: uppercase; color: var(--white);
     margin-bottom: 10px;
   }
-  .trabalhe p { color: rgba(255,255,255,.88); font-size: 14px; margin-bottom: 28px; }
+  .trabalhe p { color: rgba(255,255,255,.88); font-size: 20px; margin-bottom: 28px; }
   .btn-white {
     display: inline-block;
     background: var(--white); color: var(--orange);
@@ -623,6 +633,23 @@
   });
 });
     }
+
+    const images = document.querySelectorAll('.main-carousel img');
+let current = 0;
+
+function showSlide(index) {
+  images.forEach(img => img.classList.remove('active'));
+  images[index].classList.add('active');
+}
+
+// inicial
+showSlide(current);
+
+// troca automática a cada 3 segundos
+setInterval(() => {
+  current = (current + 1) % images.length;
+  showSlide(current);
+}, 3000);
   </script>
 
 </section>
