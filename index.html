@@ -303,6 +303,7 @@
 
 .faq-item.active .faq-a {
   max-height: 200px;
+   margin-bottom: 25px;
 }
 
 .faq-item.active .faq-a {
@@ -408,54 +409,38 @@
   }
 
 .carousel-container {
-  max-width: 900px;   /* controla largura igual ao layout */
-  margin: 0 auto;     /* centraliza */
-  padding: 40px 20px; /* espaçamento interno */
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-/* Área da imagem principal */
-.main-carousel {
-  margin-bottom: 20px; /* espaço entre imagem e thumbnails */
-}
-
+/* Área principal */
 .main-carousel {
   position: relative;
   height: 400px;
+  margin-bottom: 20px;
 }
 
 .main-carousel img {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
 }
 
-/* imagem clicada */
-.main-carousel img:target {
+.main-carousel img.active {
   opacity: 1;
   z-index: 2;
 }
 
-/* MOSTRA A PRIMEIRA SÓ QUANDO NENHUMA ESTÁ ATIVA */
-.main-carousel img:first-child {
-  opacity: 1;
-}
-
-/* quando qualquer imagem estiver ativa, esconde a primeira */
-.main-carousel img:target ~ img:first-child,
-.main-carousel img:target ~ img {
-  opacity: 0;
-}
-/* Área das miniaturas */
+/* thumbnails */
 .thumbnails {
   display: flex;
   justify-content: center;
-  gap: 10px;          /* espaçamento entre miniaturas */
+  gap: 10px;
   margin-bottom: 25px;
 }
 
@@ -472,6 +457,12 @@
 .thumbnails img:hover {
   opacity: 1;
   transform: scale(1.05);
+}
+
+/* thumbnail ativa */
+.thumbnails img.active {
+  opacity: 1;
+  border: 2px solid var(--orange);
 }
 
 /* Animação para deslizar */
@@ -491,7 +482,7 @@
 
 <!-- NAV -->
 <nav>
-  <img src="logo.png" style="display: flex; color: white; width: 20%;"></a>
+  <img src="logo1.png" style="display: flex; color: white; width: 20%;"></a>
   <ul>
     <li><a href="#">Início</a></li>
     <li><a href="#">Sobre</a></li>
@@ -614,74 +605,72 @@
   </div>
 
   <!-- Thumbnail swatches acting as slide selectors -->
-  <script>
-    var carouselIndex = 0;
-    var slides = document.querySelectorAll('.carousel-slide');
-    var thumbs = document.querySelectorAll('.swatch-thumb');
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
-    function goToSlide(n) {
-      slides[carouselIndex].style.display = 'none';
-      thumbs[carouselIndex].style.borderColor = 'transparent';
-      carouselIndex = (n + slides.length) % slides.length;
-      slides[carouselIndex].style.display = 'block';
-      thumbs[carouselIndex].style.borderColor = 'var(--orange)';
-    }
+  /* =========================
+     CAROUSEL
+  ========================== */
+  const images = document.querySelectorAll('.main-carousel img');
+  const thumbs = document.querySelectorAll('.thumbnails img');
 
-    function moveCarousel(dir) {
-      goToSlide(carouselIndex + dir);
+  let current = 0;
+  let interval;
 
-      document.addEventListener("DOMContentLoaded", () => {
-  const images = document.querySelectorAll(".main-carousel img");
-  images[0].classList.add("active");
+  function showSlide(index) {
+    images.forEach(img => img.classList.remove('active'));
+    thumbs.forEach(t => t.classList.remove('active'));
 
-  const links = document.querySelectorAll(".thumbnails a");
+    images[index].classList.add('active');
+    thumbs[index].classList.add('active');
 
-  links.forEach(link => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
+    current = index;
+  }
 
-      const targetId = link.getAttribute("href").replace("#", "");
-      const targetImg = document.getElementById(targetId);
+  function startAuto() {
+    interval = setInterval(() => {
+      let next = (current + 1) % images.length;
+      showSlide(next);
+    }, 3000);
+  }
 
-      images.forEach(img => img.classList.remove("active"));
-      targetImg.classList.add("active");
+  function resetAuto() {
+    clearInterval(interval);
+    startAuto();
+  }
+
+  if (images.length > 0) {
+    showSlide(0);
+    startAuto();
+  }
+
+  thumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => {
+      showSlide(index);
+      resetAuto();
     });
   });
-});
-    }
 
-    const images = document.querySelectorAll('.main-carousel img');
-let current = 0;
+  /* =========================
+     FAQ (FUNCIONANDO)
+  ========================== */
+  document.querySelectorAll('.faq-q').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.parentElement;
+      const answer = item.querySelector('.faq-a');
 
-function showSlide(index) {
-  images.forEach(img => img.classList.remove('active'));
-  images[index].classList.add('active');
-}
-
-// inicial
-showSlide(current);
-
-// troca automática a cada 3 segundos
-setInterval(() => {
-  current = (current + 1) % images.length;
-  showSlide(current);
-}, 3000);
-
-document.querySelectorAll('.faq-q').forEach(button => {
-  button.addEventListener('click', () => {
-    const item = button.parentElement;
-
-    item.classList.toggle('active');
+      if (item.classList.contains('active')) {
+        answer.style.maxHeight = null;
+        item.classList.remove('active');
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        item.classList.add('active');
+      }
+    });
   });
 
-
-document.querySelectorAll('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.parentElement.classList.toggle('active');
-  });
 });
-});
-  </script>
+</script>
 
 </section>
 
@@ -743,10 +732,6 @@ document.querySelectorAll('.faq-q').forEach(btn => {
     <button class="faq-q"><b>Posso comprar nossos produtos no Olympo?</b></button>
     <div class="faq-a">Sim, nossos produtos estão disponíveis em nossa rede de distribuidores parceiros. Entre em contato para saber o ponto de venda mais próximo de você.</div>
   </div>
-  <div class="faq-item">
-    <button class="faq-q"><b>O Steel Frame é que pode trazer instalações elétrica sem fio de forma?</b></button>
-    <div class="faq-a">O Steel Frame permite a passagem de instalações elétricas hidráulicas e de dados pelo interior das peças. As instalações são feitas com furos pré-definidos nos perfis metálicos, facilitando o trabalho.</div>
-  </div>
 </section>
 
 <!-- UNIDADES -->
@@ -801,7 +786,7 @@ document.querySelectorAll('.faq-q').forEach(btn => {
   <div class="footer-grid">
 
     <div>
-      <img src="data:image/png;base64,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" alt="Perfectto" style="height:40px;object-fit:contain;filter:brightness(0) invert(1);margin-bottom:16px;display:block;">
+      <img src="logo1.png" alt="Perfectto" style="height:50px;object-fit:contain;filter:brightness(0) invert(1);margin-bottom:16px;display:block;">
       <div class="footer-addr">
         <strong>Matriz</strong><br>
         R. Apipucos, 194 – Apipucos<br>
