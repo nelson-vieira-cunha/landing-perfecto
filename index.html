@@ -16,13 +16,14 @@
 
   :root {
     --orange: #FF6B00;
-    --orange-dark: #E05A00;
     --black: #1a1a1a;
     --dark: #222222;
     --white: #ffffff;
     --gray-light: #f5f5f5;
     --gray: #888;
     --text: #333;
+    --orange-light: #ff6a00;
+    --orange-dark: #ff3c00;
   }
 
   body { font-family: 'Open Sans', sans-serif; color: var(--text); background: #fff; }
@@ -36,33 +37,141 @@
   font-style: normal;
 }
 
+nav {
+  background: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(16px, 5vw, 48px);
+  height: 80px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* LOGO */
+.logo {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: clamp(20px, 3vw, 28px);
+  color: var(--white);
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+.logo span { color: var(--black); }
+
+/* MENU DESKTOP */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: clamp(16px, 3vw, 32px);
+}
+
+nav ul a {
+  color: var(--white);
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(12px, 1.2vw, 14px);
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  padding: 30px 10px;
+  transition: color .2s;
+}
+
+nav ul a:hover { color: var(--black); }
+
+/* BOTÃO */
+.btn-contato {
+  background: var(--black);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: clamp(11px, 1.2vw, 12px);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  padding: 14px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background .2s;
+}
+.btn-contato:hover { background: #333; }
+
+/* HAMBURGER (hidden desktop) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  display: block;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
   nav {
+    height: 70px;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  nav ul {
+    position: absolute;
+    top: 70px;
+    right: 0;
     background: var(--orange);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 48px; height: 80px; position: sticky; top: 0; z-index: 1000;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease;
   }
+  @media (max-width: 768px) {
+  .menu a {
+    font-size: 12px;
+  }
+
   .logo {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900; font-size: 28px; color: var(--white);
-    letter-spacing: 1px; text-decoration: none;
+    font-size: 20px;
   }
-  .logo span { color: var(--black); }
-  nav ul { list-style: none; display: flex; gap: 32px; }
-  nav ul a {
-    color: var(--white); text-decoration: none;
-    font-family: 'Inter', sans-serif; font-size: 14px;
-    font-weight: 600; letter-spacing: .5px; text-transform: uppercase; padding: 30px 10px;
-    transition: color .2s;
-  }
-  nav ul a:hover { color: var(--black); }
+
   .btn-contato {
-    background: var(--black); color: #fff;
-    font-family: 'Inter', sans-serif; font-weight: 700;
-    font-size: 12px; text-transform: uppercase; letter-spacing: .5px;
-    padding: 19px 30px; border-radius: 30px; text-decoration: none;
-    transition: background .2s;
+    font-size: 11px;
   }
-  .btn-contato:hover { background: #333; }
+}
+
+@media (max-width: 480px) {
+  .menu a {
+    font-size: 11px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+}
+
+  nav ul.open {
+    max-height: 300px;
+  }
+
+  nav ul a {
+    padding: 16px;
+    display: block;
+  }
+
+  .btn-contato {
+    display: none; /* opcional esconder no mobile */
+  }
+}
 
   /* ── HERO ── */
   .hero {
@@ -193,6 +302,7 @@
   .stats-section {
     background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),;
     padding: 60px 48px;
+    white-space: nowrap;       
   }
   .stats-title {
     font-family: 'Bebas Neue', sans-serif;
@@ -200,6 +310,27 @@
     text-transform: uppercase; color: var(--black);
     margin-bottom: 36px;
   }
+
+  @media (max-width: 1024px) {
+  .stats-title {
+    font-size: 36px;
+    margin-bottom: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-title {
+    font-size: 38px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-title {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+}
   .stats-title span { color: var(--orange); }
   .stats-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
@@ -210,6 +341,7 @@
     background: var(--white);
     padding: 28px 24px; text-align: center;
     border-right: 1px solid #fff;
+    white-space: nowrap;       
   }
   .stat-item:last-child { border-right: none; }
   .stat-num {
@@ -240,7 +372,7 @@
   overflow-x: auto;
   }
 
-  @media (max-width: 1800px) {
+  @media (max-width: 1500px) {
   .partners-row img {
     width: 180px;
   }
@@ -255,10 +387,12 @@
   .partner-logo:hover { color: var(--white); }
 
   /* ── TRABALHE CONOSCO ── */
-  .trabalhe {
-    background: var(--orange);
-    padding: 56px 48px; text-align: center;
-  }
+.trabalhe {
+  background: linear-gradient(to bottom, #ff5a00, #cc0000);
+  padding: 56px 48px;
+  text-align: center;
+}
+
   .trabalhe h2 {
     font-size: 44px; font-weight: 800;
     text-transform: uppercase; color: var(--white);
@@ -402,6 +536,8 @@
     nav ul { display: flex; flex-wrap: wrap; gap: 24px; }
     .hero { padding: 60px 20px; }
     .hero h1 { font-size: 28px; }
+    .hero p { font-size: 18px; }
+     .btn-primary {  padding: 13px 30px; }
     .produtos, .aplicados, .stats-section, .trabalhe, .faq, .unidades { padding: 40px 20px; }
     .produtos-grid { grid-template-columns: repeat(2, 1fr); }
     .stats-grid { grid-template-columns: 1fr; }
@@ -828,14 +964,21 @@ document.addEventListener("DOMContentLoaded", () => {
     <i class="fa fa-instagram"></i>
 <span class="__cf_email__" data-cfemail="4724282933263328073722352122243333286924282a692535">@perfecttoforros</span></a></p>
       <p style="margin-top:16px; font-size:15px; color:rgba(255,255,255,.35)">Desenvolvido por</p>
-      <img style="width: 207px;"  src="proxy.png">
+       <a href="https://www.promovacomunicacao.com.br/" target="_blank">
+  <img style="width: 207px;" src="proxy.png">
+   </a>
     </div>
+
+   
 
   </div>
 
   <div class="footer-bar">
-    <span>© 2024 Perfectto. Todos os direitos reservados.</span>
+    <span>©Copyright 2026 - Promova Comunicação e Marketing Ltda.  <p><a href="https://www.instagram.com/promovacomunicacao/" target="_blank"></a> <i class="fa fa-instagram"></i>
+<span class="__cf_email__" data-cfemail="4724282933263328073722352122243333286924282a692535">@promovacomunicacao</span></a></p>
+</span>
     <span>Política de Privacidade</span>
+    
   </div>
 </footer>
 
