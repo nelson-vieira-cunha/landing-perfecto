@@ -361,7 +361,7 @@ nav ul a:hover { color: var(--black); }
     margin-bottom: 20px;
   }
   .partners-row {
-    display: flex; align-items: center; gap: 40px; flex-wrap: wrap;
+    display: flex; align-items: center; gap: 30px; flex-wrap: nowrap;
   }
 
    .partners-row img {
@@ -372,9 +372,12 @@ nav ul a:hover { color: var(--black); }
   overflow-x: auto;
   }
 
-  @media (max-width: 1500px) {
+  @media (min-width: 1600px) {
   .partners-row img {
     width: 180px;
+  }
+  .partners-row  {
+    flex-wrap: wrap;
   }
 }
   .partner-logo {
