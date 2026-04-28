@@ -372,24 +372,22 @@ nav ul a:hover { color: var(--black); }
     margin-bottom: 20px;
   }
   .partners-row {
-    display: flex; align-items: center; gap: 30px; flex-wrap: nowrap;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
   }
 
    .partners-row img {
      position: relative; border-radius: 8px; overflow: hidden;
     height: 140px; margin-bottom: 20px;
-    margin: 40px;
+    margin: 30px;
     min-width: 200px;
   overflow-x: auto;
   }
 
-  @media (min-width: 1600px) {
+  @media (max-width: 1600px) {
   .partners-row img {
-    width: 180px;
+    width: 100px;
   }
-  .partners-row  {
-    flex-wrap: wrap;
-  }
+
 }
   .partner-logo {
     font-family: 'Inter', sans-serif;
