@@ -37,6 +37,15 @@
   font-style: normal;
 }
 
+.hamburger {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+}
+
 nav {
   background: var(--orange);
   display: flex;
@@ -399,10 +408,21 @@ nav ul a:hover { color: var(--black); }
   .partner-logo:hover { color: var(--white); }
 
   /* ── TRABALHE CONOSCO ── */
+
+
+/* camada laranja por cima da imagem */
 .trabalhe {
-  background: linear-gradient(to bottom, #ff5a00, #cc0000);
-  padding: 56px 48px;
+  padding: 80px 48px;
   text-align: center;
+  color: #fff;
+  background:
+    linear-gradient(rgba(255,107,0,.85), rgba(255,107,0,.85)),
+    url('trabalhe.jpg') center 40% / cover no-repeat;
+}
+/* garante que o conteúdo fique acima */
+.trabalhe * {
+  position: relative;
+  z-index: 2;
 }
 
   .trabalhe h2 {
@@ -545,7 +565,40 @@ nav ul a:hover { color: var(--black); }
   /* ── RESPONSIVE ── */
   @media(max-width: 900px) {
     nav { padding: 0 20px; }
-    nav ul { display: flex; flex-wrap: wrap; gap: 24px; }
+    .hamburger {
+    display: block;
+  }
+   nav ul {
+    position: absolute;
+    top: 80px; /* mesma altura do nav */
+    left: 0;
+    width: 100%;
+
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    background: var(--orange);
+
+    /* colapsado por padrão */
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height 0.3s ease;
+  }
+
+  /* menu aberto */
+  nav ul.active {
+    max-height: 350px;
+    padding: 20px 0;
+  }
+
+  /* links ajustados para mobile */
+  nav ul a {
+    padding: 10px;
+    font-size: 14px;
+  }
+
     .hero { padding: 60px 20px; }
     .hero h1 { font-size: 28px; }
     .hero p { font-size: 18px; }
@@ -634,6 +687,7 @@ nav ul a:hover { color: var(--black); }
 <!-- NAV -->
 <nav>
   <img src="logo1.png" style="display: flex; color: white; width: 20%;"></a>
+   <button class="hamburger" id="hamburger">☰</button>
   <ul>
     <li><a href="#">Início</a></li>
     <li><a href="#">Sobre</a></li>
@@ -807,7 +861,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-     FAQ (FUNCIONANDO)
+     FAQ
   ========================== */
   document.querySelectorAll('.faq-q').forEach(button => {
     button.addEventListener('click', () => {
@@ -823,6 +877,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  /* =========================
+     HAMBURGER (AGORA FUNCIONA)
+  ========================== */
+  const hamburger = document.getElementById('hamburger');
+  const menu = document.getElementById('menu');
+
+  if (hamburger && menu) {
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  }
 
 });
 </script>
